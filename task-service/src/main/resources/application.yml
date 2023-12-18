@@ -1,0 +1,26 @@
+VM_HOST: 192.168.1.95
+
+server:
+  port: 8082
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka
+
+spring:
+  application:
+    name: tasks
+  config:
+    import: optional:configserver:http://localhost:8888/
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${VM_HOST:localhost}:5432/dev
+    username: dev
+    password: dev
+  jpa:
+    hibernate:
+      ddl-auto: update
+      database-platform: org.hibernate.dialect.PostgreSQLDialect

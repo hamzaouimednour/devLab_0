@@ -1,0 +1,19 @@
+
+server:
+  port:
+    8888
+
+client:
+  eureka:
+    register-with-eureka: false
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configurations
