@@ -1,0 +1,30 @@
+server:
+  port:
+    8070
+
+client:
+  eureka:
+    register-with-eureka: false
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        # services
+        - id: tasks-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/tasks-service/**
+          filters:
+            - StripPrefix=1
+        - id: users-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/users-service/**
+          filters:
+            - StripPrefix=1

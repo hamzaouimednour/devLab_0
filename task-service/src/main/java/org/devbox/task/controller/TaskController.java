@@ -28,12 +28,26 @@ public class TaskController {
         return task != null ? ResponseEntity.ok(task) : ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Task>> getAllByUser(@PathVariable Long id) {
+        return ResponseEntity.ok(taskService.findAllByUser(id));
+    }
+
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         Task createdTask = taskService.createTask(task);
 
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
-    // Other controller methods
+
+    @PutMapping("/{id}")
+    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+        return taskService.updateTask(id, task);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+    }
 }
 

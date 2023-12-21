@@ -3,6 +3,10 @@ VM_HOST: 192.168.1.95
 server:
   port: 8081
 
+application:
+  config:
+    tasks-url: http://localhost:8082/tasks
+
 eureka:
   instance:
     hostname: localhost

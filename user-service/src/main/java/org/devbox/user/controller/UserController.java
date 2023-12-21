@@ -1,13 +1,12 @@
 package org.devbox.user.controller;
 
+import org.devbox.user.dto.UserTasksResponse;
 import org.devbox.user.model.User;
 import org.devbox.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +27,25 @@ public class UserController {
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
-    // Other controller methods
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User createdTask = userService.createUser(user);
+
+        return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+    }
+
+    @GetMapping("/{id}/tasks")
+    public ResponseEntity<UserTasksResponse> findUserWithTasks(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.findUserWithTasks(id));
+    }
 }
